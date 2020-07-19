@@ -3,94 +3,50 @@ const isNumber = (n) => {
     return !isNaN(parseFloat(n)) && isFinite(n);
   },
 
-  guessTheNumber = function () {
-    let number = Math.floor(Math.random() * 100) + 1;
+  guessTheNumber = () => {
+    let number = Math.floor(Math.random() * 100) + 1,
+      attempts = 10;
 
-    alert('Угадай число от 0 до 100');
+    alert('Угадай число от 1 до 100');
 
-    function firstLevel () {
-      let usersNumber = prompt ('Введите число');
+    function checkType() {
+      let usersNumber = prompt('Введи число!');
 
-      function secondLevel () {
-          if (+usersNumber > number) {
-            confirm(' Загаданное число меньше');
-            firstLevel();
-          } else if (+usersNumber < number) {
-            confirm(' Загаданное число больше');
-            firstLevel();
+      function checkNumber() {
+        if (attempts === 1) {
+          if (confirm('Попытки закончились, хотите сыграть еще?')) {
+            guessTheNumber();
           } else {
-            alert('Вы угадали ');
-              if (confirm('Сыграем еще?')) {
-                guessTheNumber();
-              }
+            return;
           }
+        } 
+
+        if (+usersNumber > number) {
+          attempts--;
+          alert('Загаданное число меньше, осталось попыток: ' + attempts);
+          checkType();
+        } else if (+usersNumber < number) {
+          attempts--;
+          alert('Загаданное число больше, осталось попыток: ' + attempts);
+          checkType();
+        } else {
+          alert('Вы угадали!');
+          if (confirm('Сыграем ещё?')) {
+            guessTheNumber();
+          }
+        }
       }
+
       if (!isNumber(+usersNumber) || usersNumber === '') {
-                  firstLevel();
-                } else if (usersNumber === null) {
-                return;
-                } else {
-                  secondLevel();
-                }
-    
+        checkType();
+      } else if (usersNumber === null) {
+        return;
+      } else {
+        checkNumber();
+      }
     }
-    firstLevel();
 
+    checkType();
   };
-  guessTheNumber();
 
-
-
-
-
-
-
-
-
-
-
-//   guessTheNumber = function() {
-//     let number = Math.floor(Math.random() * 100) + 1;
-      
-
-//     alert('Угадай число от 1 до 100');
-
-//     function checkType() {
-//       let usersNumber = prompt('Введи число!');
-
-//       function checkNumber() {
-      
-//         if (+usersNumber > number) {
-          
-//           alert('Загаданное число меньше');
-//           checkType();
-//         } else if (+usersNumber < number) {
-          
-//           alert('Загаданное число больше' );
-//           checkType();
-//         } else {
-//           alert('Вы угадали!');
-//           if (confirm('Сыграем ещё?')) {
-//             guessTheNumber();
-//           }
-//         }
-//       }
-
-//       if (!isNumber(+usersNumber) || usersNumber === '') {
-//         checkType();
-//       } else if (usersNumber === null) {
-//         return;
-//       } else {
-//         checkNumber();
-//       }
-//     }
-
-//     checkType();
-//   };
-
-// guessTheNumber();
-
-
-
-
-
+guessTheNumber();
